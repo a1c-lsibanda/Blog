@@ -1,0 +1,52 @@
+version: '3'
+
+networks:
+    laravel:
+
+services:
+    nginx:
+        image: nginx:stable-alpine
+        container_name: nginx
+        ports:
+            - "8080:80"
+        volumes:
+            - ./src:/var/www/html
+            - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+        depends_on:
+            - php
+            - postgres
+        networks:
+                laravel:
+
+    postgres:
+        image: postgres:latest
+        container_name: postgres_db
+        restart: unless-stopped
+        tty: true
+        ports:
+            - "5432:5432"
+        environment:
+            - POSTGRES_DB=blog
+            - POSTGRES_USER=admin
+            - POSTGRES_PASSWORD=passw0rd
+            - POSTGRES_ROOT_PASSWORD=passw0rd
+            - SERVICE_TAGS=dev
+            - SERVICE_NAME=postgres
+        networks:
+            - laravel
+        volumes:
+            - ./postgres:/var/lib/pgsql
+            - ./postgres/init:/docker-entrypoint-initdb.d
+
+    php:
+        build:
+            context: .
+            dockerfile: Dockerfile
+        container_name: php
+        volumes:
+            - ./src:/var/www/html
+        ports:
+            - "9000:9000"
+        networks:
+            - laravel
+
