@@ -56,6 +56,8 @@ services:
         volumes:
             - ./src:/var/www/html
         working_dir: /var/www/html
+        depends_on:
+            - php
         networks:
             - laravel
 
@@ -80,6 +82,25 @@ services:
             - postgres
         working_dir: /var/www/html
         entrypoint: ['/var/www/html/artisan']
+        networks:
+            - laravel
+
+    nextjs:
+        build:
+            # The directory in which docker file is located for project
+            context: frontend
+            # Dockerfile.dev specifys npm run dev in docker file
+            dockerfile: Dockerfile
+        restart: unless-stopped
+        volumes:
+            # Required to sync file changes
+            - ./frontend:/usr/src/app
+            # Required to no break node_modules
+            - /usr/src/app/node_modules
+            # Required for nextjs
+            - /usr/src/app/.next
+        ports:
+        - 3000:3000
         networks:
             - laravel
 
