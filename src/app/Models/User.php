@@ -1,6 +1,8 @@
 <?php
-
 namespace App\Models;
+use App\Models\Posts;
+use App\Models\Comments;
+use App\Models\Likes;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -40,4 +42,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    //
+    public function posts()
+    {
+        return $this->hasMany(Posts::class);
+    }
+
+    //
+    public function comments()
+    {
+        return $this->hasMany(Comments::class);
+    }
+
+    //
+    public function likes()
+    {
+        return $this->hasMany(Likes::class);
+    }
 }
