@@ -44,4 +44,4 @@ jobs:
       #   run: docker-compose run --rm npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
       #Compile Mix Assets
       - name: Run Mix
-        run: docker-compose run --rm npm run dev
+        run: docker-compose run --rm npm run production
