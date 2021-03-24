@@ -38,7 +38,7 @@ jobs:
         run: docker-compose run --rm php chmod -R 777 storage bootstrap/cache
       # Install npm dependencies
       - name: Install npm dependencies
-        run: npm ci
+        run: docker-compose run --rm npm ci
       #Compile Mix Assets
       - name: Run Mix
-        run: npm run production
+        run: docker-compose run --rm npm run production
