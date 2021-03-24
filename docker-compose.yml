@@ -90,7 +90,7 @@ services:
             # The directory in which docker file is located for project
             context: ./frontend
             # Dockerfile.dev specifys npm run dev in docker file
-            dockerfile: Dockerfile
+            dockerfile: dockerfile
         restart: unless-stopped
         volumes:
             # Required to sync file changes
