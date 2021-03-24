@@ -39,6 +39,9 @@ jobs:
       # Install npm dependencies
       - name: Install npm dependencies
         run: docker-compose run --rm npm ci
+      # Install tailwind dependencies
+      - name: Install tailwind dependencies
+        run: docker-compose run --rm npm install tailwindcss@npm:@tailwindcss/postcss7-compat postcss@^7 autoprefixer@^9
       #Compile Mix Assets
       - name: Run Mix
         run: docker-compose run --rm npm run production
