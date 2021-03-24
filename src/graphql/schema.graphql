@@ -9,8 +9,19 @@ type Query {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
     post(id: ID @eq): Posts @find
+    posts: [Posts!]! @all
     comment(id: ID @eq): Comments @find
+    comments: [Comments!]! @all
     like(id: ID @eq): Likes @find
+    likes: [Likes!]! @all
+}
+
+type Mutation {
+    createUser(
+        name: String! @rules(apply: ["required", "min:4"])
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @rules(apply: ["min:4"]) @hash
+    ): User! @create
 }
 
 type User {
@@ -19,7 +30,10 @@ type User {
     email: String!
     created_at: DateTime!
     updated_at: DateTime!
-}
+    posts: [Posts] @hasMany
+    comments: [Comments] @hasMany
+    likes: [Likes] @hasMany
+ }
 
 type Posts {
     id: ID!
@@ -29,6 +43,10 @@ type Posts {
     content: String!
     created_at: DateTime!
     updated_at: DateTime!
+    user: User! @belongsTo
+    comments: [Comments] @hasMany
+    likes: [Likes] @hasMany
+
 }
 
 type Comments {
@@ -38,6 +56,7 @@ type Comments {
     reply: String!
     created_at: DateTime!
     updated_at: DateTime!
+    user: User! @belongsTo
 }
 
 type Likes {
@@ -46,4 +65,5 @@ type Likes {
     post_id: ID!
     created_at: DateTime!
     updated_at: DateTime!
+    user: User! @belongsTo
 }
