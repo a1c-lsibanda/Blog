@@ -2,7 +2,7 @@
 
 name: Docker Laravel + Nextjs build
 
-# Controls when the action will run. 
+# Controls when the action will run.
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
@@ -22,21 +22,18 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs docker-compose build command 
+      # Runs docker-compose build command
       - name: docker build
         run:  docker-compose up -d --build
-      # Renames the .env file
-      - name: Copy .env
-        run: mv .env.example .env
       # Install composer dependancies
       - name: Install Dependencies
         run: docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      # 
+      #
       - name: Generate key
         run: docker-compose run --rm artisan key:generate
-      # 
+      #
       - name: Storage Link
         run: docker-compose run --rm artisan storage:link
       #
       - name: Directory Permissions
-        run: docker-compose run --rm php chmod -R 777 storage bootstrap/cache /var/www/storage /var/www/bootstrap/cache   
+        run: docker-compose run --rm php chmod -R 777 storage bootstrap/cache /var/www/storage /var/www/bootstrap/cache
