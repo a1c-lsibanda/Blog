@@ -21,9 +21,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-      # Go into blog directory
-      - name: Go into Blog directory
-        run:  ls -a
       # Runs docker-compose build command
       - name: docker build
         run:  docker-compose up -d --build
