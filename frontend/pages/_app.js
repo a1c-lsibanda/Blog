@@ -4,7 +4,7 @@ function MyApp({Component, pageProps}) {
     return (
         <>
         <p>Header</p>
-        <Component {...pageProps} />>
+        <Component {...pageProps} />
         </>
     )
 }
