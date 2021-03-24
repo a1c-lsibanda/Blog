@@ -23,7 +23,7 @@ jobs:
       - uses: actions/checkout@v2
       # Go into blog directory
       - name: Go into Blog directory
-        run:  cd Blog
+        run:  ls -a
       # Runs docker-compose build command
       - name: docker build
         run:  docker-compose up -d --build
