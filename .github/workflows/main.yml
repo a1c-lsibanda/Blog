@@ -21,28 +21,24 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
       # Runs docker-compose build command
       - name: docker build
         run:  docker-compose up -d --build
       # Install composer dependancies
-      - name: Install Dependencies
+      - name: Install Composer Dependencies
         run: docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       # Install composer dependancies
-      - name: Update Dependencies
+      - name: Update Composer Dependencies
         run: docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      #
-      # - name: Generate key
-      #   run: docker-compose run --rm artisan key:generate
-      #
+      # Create storage link between public and storage folders
       - name: Storage Link
         run: docker-compose run --rm artisan storage:link
-      #
+      # Setup permissions
       - name: Directory Permissions
         run: docker-compose run --rm php chmod -R 777 storage bootstrap/cache
-
+      # Install npm dependencies
       - name: Install npm dependencies
-      run: npm ci
-
+        run: npm ci
+      #Compile Mix Assets
       - name: Run Mix
-      run: npm run production
+        run: npm run production
