@@ -88,7 +88,7 @@ services:
     nextjs:
         build:
             # The directory in which docker file is located for project
-            context: ../frontend/
+            context: .../frontend/
             # Dockerfile.dev specifys npm run dev in docker file
             dockerfile: Dockerfile
         restart: unless-stopped
