@@ -28,9 +28,12 @@ jobs:
       # Install composer dependancies
       - name: Install Dependencies
         run: docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      # Install composer dependancies
+      - name: Update Dependencies
+        run: docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       #
-      - name: Generate key
-        run: docker-compose run --rm artisan key:generate
+      # - name: Generate key
+      #   run: docker-compose run --rm artisan key:generate
       #
       - name: Storage Link
         run: docker-compose run --rm artisan storage:link
