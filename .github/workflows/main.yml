@@ -69,7 +69,6 @@ jobs:
         PORT: ${{ secrets.PORT }}
         KEY: ${{ secrets.SSHKEY }}
         script: |
-          ls -a
           cd Blog
           docker-compose ps
           docker-compose up -d --build
