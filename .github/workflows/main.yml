@@ -45,3 +45,29 @@ jobs:
       #Compile Mix Assets
       - name: Run Mix
         run: docker-compose run --rm npm run prod
+
+
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: CheckouT
+        uses: actions/checkout@v2
+
+      - name: Deployment
+        uses: appleboy/ssh-action@main
+
+        with:
+          host: ${{ secrets.HOST }}
+          key: ${{ secrets.SSHKEY }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+
+          script: |
+            cd /var/www/html/
+            git checkout -f
+            git pull
+
+      - name: Check running containers
+        run: docker ps
