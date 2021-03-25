@@ -12,39 +12,36 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
-  build:
-    # The type of runner that the job will run on
-    runs-on: ubuntu-latest
+  # # This workflow contains a single job called "build"
+  # build:
+  #   # The type of runner that the job will run on
+  #   runs-on: ubuntu-latest
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      # Runs docker-compose build command
-      - name: docker build
-        run:  docker-compose up -d --build
-      # Install composer dependancies
-      - name: Install Composer Dependencies
-        run: docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      # Install composer dependancies
-      - name: Update Composer Dependencies
-        run: docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-      # Create storage link between public and storage folders
-      - name: Storage Link
-        run: docker-compose run --rm artisan storage:link
-      # Setup permissions
-      - name: Directory Permissions
-        run: docker-compose run --rm php chmod -R 777 storage bootstrap/cache
-      # Install npm dependencies
-      - name: Install npm dependencies
-        run: docker-compose run --rm npm ci
-      # # Install tailwind dependencies
-      # - name: Install tailwind dependencies
-      #   run: docker-compose run --rm npm install -D tailwindcss@latest postcss@latest autoprefixer@latest
-      #Compile Mix Assets
-      - name: Run Mix
-        run: docker-compose run --rm npm run prod
+  #   # Steps represent a sequence of tasks that will be executed as part of the job
+  #   steps:
+  #     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+  #     - uses: actions/checkout@v2
+  #     # Runs docker-compose build command
+  #     - name: docker build
+  #       run:  docker-compose up -d --build
+  #     # Install composer dependancies
+  #     - name: Install Composer Dependencies
+  #       run: docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+  #     # Install composer dependancies
+  #     - name: Update Composer Dependencies
+  #       run: docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+  #     # Create storage link between public and storage folders
+  #     - name: Storage Link
+  #       run: docker-compose run --rm artisan storage:link
+  #     # Setup permissions
+  #     - name: Directory Permissions
+  #       run: docker-compose run --rm php chmod -R 777 storage bootstrap/cache
+  #     # Install npm dependencies
+  #     - name: Install npm dependencies
+  #       run: docker-compose run --rm npm ci
+  #     #Compile Mix Assets
+  #     - name: Run Mix
+  #       run: docker-compose run --rm npm run prod
   deployment:
 
     runs-on: ubuntu-latest
@@ -72,28 +69,28 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script: ls
 
+      # Runs docker-compose build command
+    - name: docker build
+      run:  docker-compose up -d --build
+      # Install composer dependancies
+    - name: Install Composer Dependencies
+      run: docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      # Install composer dependancies
+    - name: Update Composer Dependencies
+      run: docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      # Create storage link between public and storage folders
+    - name: Storage Link
+      run: docker-compose run --rm artisan storage:link
+      # Setup permissions
+    - name: Directory Permissions
+      run: docker-compose run --rm php chmod -R 777 storage bootstrap/cache
+      # Install npm dependencies
+    - name: Install npm dependencies
+      run: docker-compose run --rm npm ci
+      #Compile Mix Assets
+    - name: Run Mix
+      run: docker-compose run --rm npm run prod
+
     - name: Check running containers
       run: docker ps
-  # deploy:
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-
-  #     - name: CheckouT
-  #       uses: actions/checkout@v2
-
-  #     - name: Deployment
-  #       uses: appleboy/ssh-action@master
-
-  #       with:
-  #         host: ${{ secrets.HOST }}
-  #         key: ${{ secrets.SSHKEY }}
-  #         username: ${{ secrets.USERNAME }}
-  #         port: ${{ secrets.PORT }}
-
-  #         script: |
-  #           cd /var/www/html/
-  #           git checkout -f
-  #           git pull
-
 
