@@ -78,8 +78,6 @@ jobs:
           mv .env.example .env
           docker-compose run --rm artisan key:generate
           docker-compose run --rm composer dump-autoload
-          docker-compose run --rm artisan cache:clear
-          docker-compose run --rm artisan view:clear
           docker-compose run --rm artisan migrate --force
           docker-compose run --rm npm ci
           docker-compose run --rm npm run prod
