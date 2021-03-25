@@ -1,4 +1,5 @@
 const mix = require('laravel-mix');
+const Mix = require('laravel-mix/src/Mix');
 
 /*
  |--------------------------------------------------------------------------
@@ -21,7 +22,7 @@ mix.js("resources/js/app.js", "public/js").postCss(
     [require("tailwindcss")]
 );
 
-mix.listen("configReady", webpackConfig => {
+Mix.listen("configReady", webpackConfig => {
     webpackConfig.module.rules.forEach(rule => {
         if (Array.isArray(rule.use)) {
             rule.use.forEach(ruleUse => {
