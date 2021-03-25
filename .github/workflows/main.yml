@@ -45,29 +45,55 @@ jobs:
       #Compile Mix Assets
       - name: Run Mix
         run: docker-compose run --rm npm run prod
+  deployment:
 
-
-  deploy:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v1
 
-      - name: CheckouT
-        uses: actions/checkout@v2
+    - name: Copy repository contents via scp
+      uses: appleboy/scp-action@master
+      env:
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+      with:
+        source: "."
+        target: "/var/www/mywebsite"
 
-      - name: Deployment
-        uses: appleboy/ssh-action@master
+    - name: Executing remote command
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
+        script: ls
 
-        with:
-          host: ${{ secrets.HOST }}
-          key: ${{ secrets.SSHKEY }}
-          username: ${{ secrets.USERNAME }}
-          port: ${{ secrets.PORT }}
+    - name: Check running containers
+      run: docker ps
+  # deploy:
+  #   runs-on: ubuntu-latest
 
-          script: |
-            cd /var/www/html/
-            git checkout -f
-            git pull
+  #   steps:
 
-      - name: Check running containers
-        run: docker ps
+  #     - name: CheckouT
+  #       uses: actions/checkout@v2
+
+  #     - name: Deployment
+  #       uses: appleboy/ssh-action@master
+
+  #       with:
+  #         host: ${{ secrets.HOST }}
+  #         key: ${{ secrets.SSHKEY }}
+  #         username: ${{ secrets.USERNAME }}
+  #         port: ${{ secrets.PORT }}
+
+  #         script: |
+  #           cd /var/www/html/
+  #           git checkout -f
+  #           git pull
+
+
