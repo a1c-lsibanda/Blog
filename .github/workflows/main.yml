@@ -72,14 +72,14 @@ jobs:
           ls -a
           cd Blog
           docker-compose ps
-        # docker-compose run --rm php chmod -R 777 storage bootstrap/cache
-        # docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-        # docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-        # mv .env.example .env
-        # docker-compose run --rm artisan key:generate
-        # docker-compose run --rm artisan migrate
-        # docker-compose run --rm npm ci
-        # docker-compose run --rm npm run prod
+          docker-compose run --rm php chmod -R 777 storage bootstrap/cache
+          docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+          mv .env.example .env
+          docker-compose run --rm artisan key:generate
+          docker-compose run --rm artisan migrate
+          docker-compose run --rm npm ci
+          docker-compose run --rm npm run prod
 
 
 
