@@ -69,6 +69,9 @@ jobs:
         KEY: ${{ secrets.SSHKEY }}
         script: ls
 
+      # Go into Blog Folder
+    - name: cd "Blog"
+      run:  cd Blog
       # Runs docker-compose build command
     - name: docker build
       run:  docker-compose up -d --build
@@ -89,7 +92,7 @@ jobs:
       run: docker-compose run --rm npm ci
       #Compile Mix Assets
     - name: Run Mix
-      run: docker-compose run --rm npm run prod
+      run: docker-compose run --rm npm run dev
 
     - name: Check running containers
       run: docker ps
