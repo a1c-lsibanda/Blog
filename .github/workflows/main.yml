@@ -43,6 +43,8 @@ jobs:
   #     - name: Run Mix
   #       run: docker-compose run --rm npm run prod
 
+   # mv .env.example .env
+
   deployment:
     # needs: build
     runs-on: ubuntu-latest
@@ -75,7 +77,7 @@ jobs:
           docker-compose run --rm php chmod -R 777 storage bootstrap/cache
           docker-compose run --rm composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
           docker-compose run --rm composer update -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
-          mv .env.example .env
+
           docker-compose run --rm artisan key:generate
           docker-compose run --rm composer dump-autoload
           docker-compose run --rm artisan migrate --force
