@@ -5,6 +5,11 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 scalar DateTime
     @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\DateTime")
 
+#import user/*.graphql
+#import comments/*.graphql
+#import likes/*.graphql
+#import posts/*.graphql
+
 type Query {
     users: [User!]! @paginate(defaultCount: 10)
     user(id: ID @eq): User @find
@@ -14,56 +19,6 @@ type Query {
     comments: [Comments!]! @all
     like(id: ID @eq): Likes @find
     likes: [Likes!]! @all
+    latestPost: Posts!
 }
 
-type Mutation {
-    createUser(
-        name: String! @rules(apply: ["required", "min:4"])
-        email: String! @rules(apply: ["email", "unique:users"])
-        password: String! @rules(apply: ["min:4"]) @hash
-    ): User! @create
-}
-
-type User {
-    id: ID!
-    name: String!
-    email: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-    posts: [Posts] @hasMany
-    comments: [Comments] @hasMany
-    likes: [Likes] @hasMany
- }
-
-type Posts {
-    id: ID!
-    user_id: ID!
-    title: String!
-    header_image: String!
-    content: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-    user: User! @belongsTo
-    comments: [Comments] @hasMany
-    likes: [Likes] @hasMany
-
-}
-
-type Comments {
-    id: ID!
-    user_id: ID!
-    post_id: ID!
-    reply: String!
-    created_at: DateTime!
-    updated_at: DateTime!
-    user: User! @belongsTo
-}
-
-type Likes {
-    id: ID!
-    user_id: ID!
-    post_id: ID!
-    created_at: DateTime!
-    updated_at: DateTime!
-    user: User! @belongsTo
-}

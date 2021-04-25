@@ -39,14 +39,12 @@ jobs:
       # Install npm dependencies
       - name: Install npm dependencies
         run: docker-compose run --rm npm ci
-      #Compile Mix Assets
+      # Compile Mix Assets
       - name: Run Mix
         run: docker-compose run --rm npm run prod
-
-   # mv .env.example .env
-
+  #
   deployment:
-    # needs: build
+    needs: build
     runs-on: ubuntu-latest
 
     steps:

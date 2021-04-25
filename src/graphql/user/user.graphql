@@ -1,0 +1,18 @@
+type Mutation {
+    createUser(
+        name: String! @rules(apply: ["required", "min:4"])
+        email: String! @rules(apply: ["email", "unique:users"])
+        password: String! @rules(apply: ["min:4"]) @hash
+    ): User! @create
+}
+
+type User {
+    id: ID!
+    name: String!
+    email: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    posts: [Posts] @hasMany
+    comments: [Comments] @hasMany
+    likes: [Likes] @hasMany
+}

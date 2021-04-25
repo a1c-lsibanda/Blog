@@ -74,4 +74,5 @@
         </div>
     </div>
 </div>
+<div id="register"></div>
 @endsection

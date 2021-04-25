@@ -1,0 +1,12 @@
+type Posts {
+    id: ID!
+    user_id: ID!
+    title: String!
+    header_image: String!
+    content: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    user: User! @belongsTo
+    comments: [Comments] @hasMany
+    likes: [Likes] @hasMany
+}

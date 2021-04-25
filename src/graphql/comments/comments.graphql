@@ -1,0 +1,9 @@
+type Comments {
+    id: ID!
+    user_id: ID!
+    post_id: ID!
+    reply: String!
+    created_at: DateTime!
+    updated_at: DateTime!
+    user: User! @belongsTo
+}
