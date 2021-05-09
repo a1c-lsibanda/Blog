@@ -43,6 +43,7 @@ jobs:
       - name: Run Mix
         run: docker-compose run --rm npm run prod
   #
+
   deployment:
     needs: build
     runs-on: ubuntu-latest
@@ -53,10 +54,10 @@ jobs:
     - name: Copy repository contents via scp
       uses: appleboy/scp-action@master
       env:
-        HOST: ${{ secrets.HOST }}
-        USERNAME: ${{ secrets.USERNAME }}
-        PORT: ${{ secrets.PORT }}
-        KEY: ${{ secrets.SSHKEY }}
+        HOST: ${{ secrets.MAIN_HOST }}
+        USERNAME: ${{ secrets.MAIN_USERNAME }}
+        PORT: ${{ secrets.MAIN_PORT }}
+        KEY: ${{ secrets.MAIN_SSHKEY }}
       with:
         source: "."
         target: "Blog"
