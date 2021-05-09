@@ -27,9 +27,3 @@ mix.browserSync({
     notify: false,
     proxy: '127.0.0.1',
 });
-
-var LiveReloadPlugin = require('webpack-livereload-plugin');
-
-mix.webpackConfig({
-    plugins: [new LiveReloadPlugin()]
-});
