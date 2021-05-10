@@ -49,8 +49,8 @@ jobs:
     runs-on: ubuntu-latest
 
     # The environment this job references
-    environment:
-      name: Kamatera
+    # environment:
+    #   name: Kamatera
 
     steps:
     - uses: actions/checkout@v1
@@ -58,11 +58,10 @@ jobs:
     - name: Copy repository contents via scp
       uses: appleboy/scp-action@master
       env:
-        name: Kamatera
-        HOST: ${{ secrets.MAIN_HOST }}
-        USERNAME: ${{ secrets.MAIN_USERNAME }}
-        PORT: ${{ secrets.MAIN_PORT }}
-        KEY: ${{ secrets.MAIN_SSHKEY }}
+        HOST: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
       with:
         source: "."
         target: "Blog"
@@ -70,10 +69,10 @@ jobs:
     - name: Executing remote command
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.MAIN_HOST }}
-        USERNAME: ${{ secrets.MAIN_USERNAME }}
-        PORT: ${{ secrets.MAIN_PORT }}
-        KEY: ${{ secrets.MAIN_SSHKEY }}
+        host: ${{ secrets.HOST }}
+        USERNAME: ${{ secrets.USERNAME }}
+        PORT: ${{ secrets.PORT }}
+        KEY: ${{ secrets.SSHKEY }}
         script: |
           cd Blog
           docker-compose ps
