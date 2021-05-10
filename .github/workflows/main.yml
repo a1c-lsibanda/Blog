@@ -48,6 +48,10 @@ jobs:
     # needs: build
     runs-on: ubuntu-latest
 
+    # The environment this job references
+    environment:
+      name: Kamatera
+
     steps:
     - uses: actions/checkout@v1
 
