@@ -84,4 +84,5 @@ jobs:
           docker-compose run --rm composer dump-autoload
           docker-compose run --rm artisan migrate --force
           docker-compose run --rm npm ci --prefer-offline --no-audit
+          docker-compose run --rm artisan ui react --auth
           docker-compose run --rm npm run prod
