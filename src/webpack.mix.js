@@ -22,8 +22,8 @@ mix.js("resources/js/app.js", "public/js").postCss(
 );
 
 mix.browserSync({
-    ui: false,
+    // ui: false,
     injectChanges: true,
-    notify: false,
+    // notify: false,
     proxy: '127.0.0.1',
 });

@@ -1,30 +1,21 @@
-import React, { Component } from "react"
-import ReactDOM from "react-dom"
+import React from "react"
 
-import Header from "./components/Header"
-import Sidebar from "./components/Sidebar"
-import Main from "./components/Main"
+import Login from "./views/Login"
+import Dashboard from "./views/Dashboard"
+import Register from "./views/Register"
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom"
 
-function MainRoute() {
+function Routes() {
     return (
-        <Router>
-            <div class="flex h-screen bg-gray-50 dark:bg-gray-900">
-                <Sidebar />
-                <div class="flex flex-col flex-1 w-full">
-                    <Header />
-                    <Main />
-                </div>
-                {/* <Switch>
-                    <Route path="/employee/index" exact component={List} />
-                    <Route path="/employee/form" component={Form} />
-                    <Route path="/employee/edit/:id" component={Edit} />
-                </Switch> */}
-            </div>
-        </Router>
+        <div className="App">
+            <Switch>
+                <Route exact path="/" component={Dashboard} title="welcome" />
+                <Route exact path="/login" component={Login} />
+                <Route exact path="/register" component={Register} />
+            </Switch>
+        </div>
     );
 }
 
-export default MainRoute;
-ReactDOM.render(<MainRoute />, document.getElementById("router"));
+export default Routes;

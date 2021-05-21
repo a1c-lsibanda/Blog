@@ -11,15 +11,20 @@ scalar DateTime
 #import posts/*.graphql
 
 type Query {
-    users: [User!]! @paginate(defaultCount: 10)
-    user(id: ID @eq): User @find
-    post(id: ID @eq): Posts @find
-    posts: [Posts!]! @all
-    comment(id: ID @eq): Comments @find
-    comments: [Comments!]! @all
-    like(id: ID @eq): Likes @find
-    likes: [Likes!]! @all
-    latestPost: Posts!
+    users: [User!]! @guard(with: ["api"]) @paginate(defaultCount: 10)
+    user(id: ID @eq): User @find @guard(with: ["api"])
+
+    post(id: ID @eq): Posts @find @guard(with: ["api"])
+    posts: [Posts!]! @all @guard(with: ["api"])
+
+    comment(id: ID @eq): Comments @find @guard(with: ["api"])
+    comments: [Comments!]! @all @guard(with: ["api"])
+
+    like(id: ID @eq): Likes @find @guard(with: ["api"])
+    likes: [Likes!]! @all @guard(with: ["api"])
+
+    latestPost: Posts! @guard(with: ["api"])
+    # me: User! @middleware(checks:["auth:api"]) @auth
     me: User @auth
 }
 
@@ -33,4 +38,45 @@ type Mutation {
     socialLogin(input: SocialLoginInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\SocialLogin@resolve")
     verifyEmail(input: VerifyEmailInput! @spread): AuthPayload! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\VerifyEmail@resolve")
     updatePassword(input: UpdatePassword! @spread): UpdatePasswordResponse! @field(resolver: "Joselfonseca\\LighthouseGraphQLPassport\\GraphQL\\Mutations\\UpdatePassword@resolve") @guard(with: ["api"])
+
+    # Like
+    createLike(
+        user_id: String! @rules(apply: ["required", "integer"])
+        post_id: String! @rules(apply: ["required", "integer"])
+    ): Likes @create
+    deleteLike(
+        id: String! @rules(apply: ["required", "integer"])
+    ): Likes @delete
+
+    # Comment
+    createComment(
+        user_id: String! @rules(apply: ["required", "integer"])
+        post_id: String! @rules(apply: ["required", "striintegerntegering"])
+        reply:   String! @rules(apply: ["required", "integer"])
+    ): Likes @create
+    updateComment(
+        id:      String! @rules(apply: ["required"])
+        user_id: String! @rules(apply: ["required", "integer"])
+        post_id: String! @rules(apply: ["required", "integer"])
+        reply:   String! @rules(apply: ["required", "string"])
+    ): Likes @update
+    deleteComment(
+        id: String! @rules(apply: ["required", "integer"])
+    ): Likes @delete
+
+    # Comment
+    createComment(
+        user_id: String! @rules(apply: ["required", "integer"])
+        post_id: String! @rules(apply: ["required", "striintegerntegering"])
+        reply:   String! @rules(apply: ["required", "integer"])
+    ): Likes @create
+    updateComment(
+        id:      String! @rules(apply: ["required"])
+        user_id: String! @rules(apply: ["required", "integer"])
+        post_id: String! @rules(apply: ["required", "integer"])
+        reply:   String! @rules(apply: ["required", "string"])
+    ): Likes @update
+    deleteComment(
+        id: String! @rules(apply: ["required", "integer"])
+    ): Likes @delete
 }
